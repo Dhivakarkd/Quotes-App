@@ -14,7 +14,8 @@ class QuotesApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => QuoteState(),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'Quotes',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
