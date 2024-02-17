@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quotes/model/Quote.dart';
 import 'package:quotes/widgets/quotesApp.dart';
 import 'package:english_words/english_words.dart';
 
@@ -9,10 +10,10 @@ class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<QuoteState>();
-    var pair = appState.current;
+    var quote = appState.current;
 
     IconData icon;
-    if (appState.favorites.contains(pair)) {
+    if (appState.favorites.contains(quote)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
@@ -23,7 +24,8 @@ class GeneratorPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacer(),
-          BigCard(pair: pair),
+          BigCard(quote: quote),
+          SizedBox(height: 10),
           Expanded(
             flex: 2, // Adjust the flex factor as needed
             child: Column(
@@ -62,10 +64,10 @@ class GeneratorPage extends StatelessWidget {
 class BigCard extends StatelessWidget {
   const BigCard({
     Key? key,
-    required this.pair,
+    required this.quote,
   }) : super(key: key);
 
-  final WordPair pair;
+  final Quote quote;
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +88,11 @@ class BigCard extends StatelessWidget {
             child: Wrap(
               children: [
                 Text(
-                  pair.first,
+                  quote.firstLine,
                   style: style.copyWith(fontWeight: FontWeight.w200),
                 ),
                 Text(
-                  pair.second,
+                  quote.secondLine,
                   style: style.copyWith(fontWeight: FontWeight.bold),
                 )
               ],
