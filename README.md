@@ -4,15 +4,18 @@ Welcome to the Quotes App! 🚀
 
 This app is your go-to source for endless inspiration, motivation, and wisdom through quotes from various authors across different topics. Whether you need a quick pick-me-up, a dose of wisdom, or just some food for thought, this app has got you covered!
 
- ## UI
+## 🎨 UI
 
  ![quotes-app-demo](https://github.com/Dhivakarkd/Quotes-App/assets/46301457/8c4a7c81-4fb7-4239-b998-47765ee9f095)
 
  ## Features
 
 🔖 **Browse Quotes:** Scroll through a curated collection of quotes from different authors and topics.  
+
 🔄 **Cycle Through Quotes:** Cycle through all the quotes in the cache and fetch new ones when needed.  
+
 📝 **Save Favorites:** Save your favorite quotes to revisit them later whenever you need a boost.  
+
 📱 **Responsive Design:** Enjoy a seamless experience across different screen sizes and orientations.
 
  ## How to Use
