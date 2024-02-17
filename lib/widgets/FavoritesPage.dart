@@ -43,8 +43,8 @@ class FavoritesPage extends StatelessWidget {
                     },
                   ),
                   title: Text(
-                    pair.asLowerCase,
-                    semanticsLabel: pair.asPascalCase,
+                    pair.content,
+                    semanticsLabel: pair.content,
                   ),
                 ),
             ],

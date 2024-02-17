@@ -1,7 +1,10 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quotes/service/QuoteProvider.dart';
 import 'package:quotes/widgets/homePage.dart';
+
+import '../model/Quote.dart';
 
 class QuotesApp extends StatelessWidget {
   const QuotesApp({Key? key}) : super(key: key);
@@ -23,33 +26,58 @@ class QuotesApp extends StatelessWidget {
 }
 
 class QuoteState extends ChangeNotifier {
-  var current = WordPair.random();
-  var history = <WordPair>[];
+  final QuoteProvider _quoteProvider = QuoteProvider();
+  List<Quote> quotes = [];
+  late Quote current = _getDefaultQuote();
+  var favorites = <Quote>[];
 
-  GlobalKey? historyListKey;
-
-  void getNext() {
-    history.insert(0, current);
-    var animatedList = historyListKey?.currentState as AnimatedListState?;
-    animatedList?.insertItem(0);
-    current = WordPair.random();
-    notifyListeners();
+  QuoteState() {
+    getNext();
   }
 
-  var favorites = <WordPair>[];
-
-  void toggleFavorite([WordPair? pair]) {
-    pair = pair ?? current;
-    if (favorites.contains(pair)) {
-      favorites.remove(pair);
-    } else {
-      favorites.add(pair);
+  Future<void> getNext() async {
+    try {
+      // Fetch quotes from the API
+      current = await _fetchNextQuote();
+    } catch (e) {
+      print('Error fetching quotes: $e');
+      current = _getDefaultQuote();
     }
     notifyListeners();
   }
 
-  void removeFavorite(WordPair pair) {
-    favorites.remove(pair);
+  Future<Quote> _fetchNextQuote() async {
+    quotes = await _quoteProvider.fetchQuotes();
+    return quotes.isNotEmpty ? quotes[0] : _getDefaultQuote();
+  }
+
+  Quote _getDefaultQuote() {
+    return Quote(
+      id: '',
+      content: 'Default quote content',
+      author: 'Default author',
+      tags: [],
+      authorSlug: '',
+      length: 0,
+      dateAdded: '',
+      dateModified: '',
+    );
+  }
+
+  void toggleFavorite([Quote? quote]) {
+    quote = quote ?? current;
+    if (quote != null) {
+      if (favorites.contains(quote)) {
+        favorites.remove(quote);
+      } else {
+        favorites.add(quote);
+      }
+      notifyListeners();
+    }
+  }
+
+  void removeFavorite(Quote quote) {
+    favorites.remove(quote);
     notifyListeners();
   }
 }
